@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+
 @Controller
 public class LoginController {
 
@@ -33,7 +35,7 @@ public class LoginController {
     }
 
     @PostMapping("/registration")
-    public String registration(User user, BindingResult bindingResult, ModelMap modelMap) {
+    public String registration(@Valid User user, BindingResult bindingResult, ModelMap modelMap) {
         User userExists = userAuthService.findUserByLogin(user.getLogin());
         if (userExists != null)
             bindingResult.rejectValue(LOGIN, "error.user", LOGIN_ERROR);

@@ -32,7 +32,8 @@
             <fieldset class="form-group">
                 <form:label path="secondName">Second name</form:label>
                 <form:input path="secondName" type="text" class="form-control"/>
-y            </fieldset>
+                <form:errors path="secondName" cssClass="text-warning" />
+            </fieldset>
             <fieldset class="form-group">
                 <form:label path="">Login</form:label>
                 <form:input path="login" type="text" class="form-control"/>
