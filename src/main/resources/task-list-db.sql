@@ -29,3 +29,27 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `role` VALUES (1,'USER');
+
+CREATE TABLE `board` (
+  `board_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`board_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `task_list` (
+  `task_list_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `board_id` int(11) NOT NULL,
+  PRIMARY KEY (`task_list_id`),
+  FOREIGN KEY (`board_id`) REFERENCES `board` (`board_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `task` (
+  `task_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `task_list_id` int(11) NOT NULL,
+  PRIMARY KEY (`task_id`),
+  FOREIGN KEY (`task_list_id`) REFERENCES `task_list` (`task_list_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

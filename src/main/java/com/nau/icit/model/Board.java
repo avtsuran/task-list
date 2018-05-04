@@ -14,6 +14,10 @@ public class Board {
     @Column(name = "name")
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Long getId() {
         return id;
     }
@@ -28,5 +32,13 @@ public class Board {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
