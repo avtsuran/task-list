@@ -25,7 +25,12 @@
     <div class="board-container">
 
         <c:forEach items="${boards}" var="board">
-            <a class="board" href="/board?id=${board.id}">${board.name}</a>
+        <div id="${board.id}" class="board" onmouseover="showOrHideElement('remove-${board.id}')"
+             onmouseout="showOrHideElement('remove-${board.id}')">
+            <p>${board.name}</p>
+            <button id="remove-${board.id}" class="remove" onclick="removeBoard('${board.id}')">
+                <span aria-hidden="true" >&times;</span></button>
+        </div>
         </c:forEach>
 
         <div class="save-board" id="save-board">
@@ -35,13 +40,26 @@
                     <form:input class="title-board" path="name" placeholder="Add board title" type="text"/>
                 </fieldset>
                 <button type="submit" class="btn btn-success" id="button-save">Save</button>
-                <button type="button" class="close" aria-label="Close" >
-                    <span aria-hidden="true" onclick="show('add-board', 'save-board')">&times;</span>
+                <button type="button" class="close" onclick="changeDisplayForTwoElements('add-board', 'save-board')">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </form:form>
         </div>
 
-        <div class="create-board" id="add-board" onclick="show('save-board', 'add-board')">Create new board</div>
+        <div id="modal" class="modal-window">
+            <div class="content">
+                <div class="content-message">
+                    <h3 id="remove">Remove the board?</h3>
+                    <p>Once you remove a board, there is no going back. Please be certain.</p>
+                </div>
+                <a type="button" id="remove-board-by-id" class="btn btn-danger">Remove</a>
+                <a type="button" class="btn btn-default" onclick="showOrHideElement('modal')">No thanks</a>
+            </div>
+        </div>
+
+        <div class="create-board" id="add-board" onclick="changeDisplayForTwoElements('save-board', 'add-board')">
+            <p>Create new board</p>
+        </div>
 
     </div>
 </div>

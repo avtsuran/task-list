@@ -71,4 +71,12 @@ public class BoardControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("redirect:/board-list"));
     }
+
+    @Test
+    public void shouldRemoveBoardAndReturnToBoardsPage() throws Exception{
+        mockMvc.perform(get("/remove-board?id=" + board.getId()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("redirect:/board-list"));
+        verify(boardRepository, times(1)).delete(board.getId());
+    }
 }

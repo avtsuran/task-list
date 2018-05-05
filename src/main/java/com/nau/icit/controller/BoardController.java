@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BoardController {
@@ -28,6 +29,12 @@ public class BoardController {
     public String saveBoard(Board board){
         board.setUser(userAuthService.getAuthUser());
         boardRepository.save(board);
+        return "redirect:/board-list";
+    }
+
+    @GetMapping("/remove-board")
+    public String removeBoard(@RequestParam Long id){
+        boardRepository.delete(id);
         return "redirect:/board-list";
     }
 }
