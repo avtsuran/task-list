@@ -23,11 +23,10 @@
 </nav>
 <div class="container">
     <div class="board-container">
-
         <c:forEach items="${boards}" var="board">
         <div id="${board.id}" class="board" onmouseover="showOrHideElement('remove-${board.id}')"
              onmouseout="showOrHideElement('remove-${board.id}')">
-            <p>${board.name}</p>
+            <a class="board-link" href="/board?id=${board.id}" >${board.name}</a>
             <button id="remove-${board.id}" class="remove" onclick="removeBoard('${board.id}')">
                 <span aria-hidden="true" >&times;</span></button>
         </div>

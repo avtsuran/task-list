@@ -26,6 +26,16 @@ html, body{
     color: #ffffff;
     background: #007cbb;
 }
+.board-link{
+    color: #ffffff;
+    display: block;
+    width: 200px;
+}
+
+a:hover, a:active{
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
 
 .remove{
     display: none;
