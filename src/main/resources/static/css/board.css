@@ -56,3 +56,70 @@ html, body{
 input:focus, input:hover {
     outline:none;
 }
+
+.task-list-container {
+    display: flex;
+    align-items: flex-start;
+    overflow-x: auto;
+    height: 500px;
+}
+
+.task-list {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    min-width: 300px;
+    background-color: #e2e4e6;
+    border-radius: 3px;
+}
+
+ol, ul {
+    margin-bottom: 5px;
+}
+
+.list {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.task {
+    background-color: #ffffff;
+    padding: 5px 90px 30px 5px;
+    margin-top: 5px ;
+    border-radius: 3px;
+    border-bottom: 2px #cdcdcd ;
+}
+
+.task:hover {
+    background-color: #edeff0;
+}
+
+.add-task {
+    display: block;
+    margin-top: 10px;
+    padding-left: 5px;
+}
+
+.title-task {
+    margin-bottom: 5px;
+    padding-left: 5px;
+    width: 280px;
+    height: 30px;
+    border-radius: 3px;
+    border: none;
+    font-size: 15px;
+}
+
+.save-task {
+    display: none;
+}
+
+.close {
+    margin-right: 5px;
+}
+
+input:focus, input:hover {
+    outline:none;
+}

@@ -3,6 +3,7 @@ package com.nau.icit.controller;
 import com.nau.icit.model.Board;
 import com.nau.icit.model.User;
 import com.nau.icit.repository.BoardRepository;
+import com.nau.icit.repository.TaskListRepository;
 import com.nau.icit.service.UserAuthService;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,8 @@ public class BoardControllerTest {
     private View mockView;
     @Mock
     private BoardRepository boardRepository;
+    @Mock
+    private TaskListRepository taskListRepository;
     @Mock
     private UserAuthService userAuthService;
     private MockMvc mockMvc;

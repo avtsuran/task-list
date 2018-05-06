@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: avtsu
@@ -39,10 +40,39 @@
                 <form:hidden path="id"/>
                 <form:input class="edit-input" path="name" placeholder="Edit board " type="text"/>
                 <button type="submit" class="btn btn-success" style="margin-right: 11px">Save</button>
-                <a type="button" class="btn btn-info" onclick="changeDisplayForTwoElements('menu', 'edit')">No thanks</a>
+                <a type="button" class="btn btn-info" onclick="changeDisplayForTwoElements('menu', 'edit')">No
+                    thanks</a>
             </form:form>
         </div>
     </div>
+
+    <section class="task-list-container">
+        <c:forEach items="${list}" var="taskList">
+            <div class="task-list">
+                <h4>${taskList.name}</h4>
+                <ul class="list">
+                    <c:forEach items="${taskList.tasks}" var="task">
+                        <li class="task">${task.name}</li>
+                    </c:forEach>
+                </ul>
+                <div id="new-${taskList.id}" class="add-task">
+                    <a onclick="changeDisplayForTwoElements('save-${taskList.id}', 'new-${taskList.id}')">Add task ...</a>
+                </div>
+                <div id="save-${taskList.id}" class="save-task">
+                    <form method="post" modelAttribute="task">
+                        <fieldset>
+                            <input class="title-task" path="name" placeholder="Add task title" type="text"/>
+                        </fieldset>
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="button" onclick="changeDisplayForTwoElements('new-${taskList.id}', 'save-${taskList.id}')"
+                                class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </c:forEach>
+    </section>
 </div>
 </body>
 </html>

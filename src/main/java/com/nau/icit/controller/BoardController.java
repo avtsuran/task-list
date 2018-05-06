@@ -2,6 +2,7 @@ package com.nau.icit.controller;
 
 import com.nau.icit.model.Board;
 import com.nau.icit.repository.BoardRepository;
+import com.nau.icit.repository.TaskListRepository;
 import com.nau.icit.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ public class BoardController {
     private UserAuthService userAuthService;
     @Autowired
     private BoardRepository boardRepository;
+    @Autowired
+    private TaskListRepository taskListRepository;
 
     @GetMapping("/board-list")
     public String getBoards(ModelMap modelMap){
@@ -41,6 +44,7 @@ public class BoardController {
 
     @GetMapping("/board")
     public String getBoard(@RequestParam Long id, ModelMap modelMap){
+        modelMap.addAttribute("list", taskListRepository.findTaskListByBoardId(id));
         modelMap.addAttribute("board", boardRepository.findBoardById(id));
         return "board";
     }
