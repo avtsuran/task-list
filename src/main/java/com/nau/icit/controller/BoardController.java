@@ -4,6 +4,7 @@ import com.nau.icit.model.Board;
 import com.nau.icit.model.TaskList;
 import com.nau.icit.repository.BoardRepository;
 import com.nau.icit.repository.TaskListRepository;
+import com.nau.icit.repository.TaskRepository;
 import com.nau.icit.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ public class BoardController {
     private BoardRepository boardRepository;
     @Autowired
     private TaskListRepository taskListRepository;
+    @Autowired
+    private TaskRepository taskRepository;
 
     @GetMapping("/board-list")
     public String getBoards(ModelMap modelMap){
@@ -37,8 +40,12 @@ public class BoardController {
         return "redirect:/board-list";
     }
 
+    @Transactional
     @GetMapping("/remove-board")
     public String removeBoard(@RequestParam Long id){
+        for(TaskList taskList: taskListRepository.findTaskListsByBoardId(id))
+            taskRepository.deleteAllByTaskList(taskList);
+        taskListRepository.deleteAllByBoard(boardRepository.findBoardById(id));
         boardRepository.delete(id);
         return "redirect:/board-list";
     }
