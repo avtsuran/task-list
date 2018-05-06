@@ -1,6 +1,7 @@
 package com.nau.icit.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "task_list")
@@ -17,6 +18,9 @@ public class TaskList {
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
+
+    @OneToMany(mappedBy = "taskList")
+    private List<Task> tasks;
 
     public Long getId() {
         return id;
@@ -40,5 +44,13 @@ public class TaskList {
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }
