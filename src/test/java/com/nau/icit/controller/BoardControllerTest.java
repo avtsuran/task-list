@@ -39,6 +39,7 @@ public class BoardControllerTest {
     private MockMvc mockMvc;
     private User user;
     private List<Board> boards;
+    @Mock
     private Board board;
     @Before
     public void setUp() {
@@ -78,5 +79,21 @@ public class BoardControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("redirect:/board-list"));
         verify(boardRepository, times(1)).delete(board.getId());
+    }
+
+    @Test
+    public void shouldReturnBoardPage() throws Exception{
+        mockMvc.perform(get("/board?id=" + board.getId()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("board"));
+    }
+
+    @Test
+    public void shouldEditBoardNameAndReturnBoardPage() throws Exception{
+        mockMvc.perform(post("/board")
+                    .param("id", board.getId().toString())
+                    .param("name", board.getName()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("redirect:/board?id=" + board.getId()));
     }
 }

@@ -5,6 +5,7 @@ import com.nau.icit.repository.BoardRepository;
 import com.nau.icit.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,5 +37,20 @@ public class BoardController {
     public String removeBoard(@RequestParam Long id){
         boardRepository.delete(id);
         return "redirect:/board-list";
+    }
+
+    @GetMapping("/board")
+    public String getBoard(@RequestParam Long id, ModelMap modelMap){
+        modelMap.addAttribute("board", boardRepository.findBoardById(id));
+        return "board";
+    }
+
+    @Transactional
+    @PostMapping("/board")
+    public String editBoard(Board board, ModelMap modelMap){
+        board.setUser(userAuthService.getAuthUser());
+        boardRepository.save(board);
+        modelMap.clear();
+        return "redirect:/board?id=" + board.getId();
     }
 }
