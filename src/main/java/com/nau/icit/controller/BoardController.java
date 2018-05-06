@@ -1,6 +1,7 @@
 package com.nau.icit.controller;
 
 import com.nau.icit.model.Board;
+import com.nau.icit.model.TaskList;
 import com.nau.icit.repository.BoardRepository;
 import com.nau.icit.repository.TaskListRepository;
 import com.nau.icit.service.UserAuthService;
@@ -44,8 +45,9 @@ public class BoardController {
 
     @GetMapping("/board")
     public String getBoard(@RequestParam Long id, ModelMap modelMap){
-        modelMap.addAttribute("list", taskListRepository.findTaskListByBoardId(id));
+        modelMap.addAttribute("list", taskListRepository.findTaskListsByBoardId(id));
         modelMap.addAttribute("board", boardRepository.findBoardById(id));
+        modelMap.addAttribute("newList", new TaskList());
         return "board";
     }
 
@@ -56,5 +58,13 @@ public class BoardController {
         boardRepository.save(board);
         modelMap.clear();
         return "redirect:/board?id=" + board.getId();
+    }
+
+    @Transactional
+    @PostMapping("/add-task-list")
+    public String addTaskList(@RequestParam Long id, TaskList taskList){
+        taskList.setBoard(boardRepository.findBoardById(id));
+        taskListRepository.save(taskList);
+        return "redirect:/board?id=" + taskList.getBoard().getId();
     }
 }

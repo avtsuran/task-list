@@ -64,6 +64,27 @@ input:focus, input:hover {
     height: 500px;
 }
 
+.task-list-container {
+    display: flex;
+    align-items: flex-start;
+    overflow-x: auto;
+    height: 500px;
+}
+
+.task-list-container::-webkit-scrollbar {
+    height: 10px;
+}
+
+.task-list-container::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #e2e4e6;
+}
+
+.task-list-container::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #b4b5b7;
+}
+
 .task-list {
     margin-right: 10px;
     margin-bottom: 10px;
@@ -122,4 +143,35 @@ ol, ul {
 
 input:focus, input:hover {
     outline:none;
+}
+
+form{
+    margin: 0;
+}
+
+.add-list{
+    display: block;
+    margin-right: 10px;
+    padding-bottom: 10px;
+    padding-right: 120px;
+    padding-left: 10px;
+    min-width: 300px;
+    background-color: #e2e4e6;
+    border-radius: 3px;
+}
+
+.add-list:hover{
+    background-color: #b7b9bb;
+}
+
+.title-task-list{
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    width: 280px;
+    height: 30px;
+    border-radius: 3px;
+    border: none;
+    font-size: 15px;
 }

@@ -22,6 +22,9 @@
         <a href="#" class="navbar-brand">TASK-LIST</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/board-list">Home</a></li>
+        </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/logout">Logout</a></li>
         </ul>
@@ -72,6 +75,21 @@
                 </div>
             </div>
         </c:forEach>
+
+        <div id="new-list" class="add-list" onclick="changeDisplayForTwoElements('save-list', 'new-list')">
+            <h4>Add a list... </h4>
+        </div>
+
+        <div id="save-list" class="task-list" style="display: none;">
+            <form:form method="post" action="/add-task-list?id=${board.id}" modelAttribute="newList">
+                <form:input class="title-task-list" path="name" placeholder="Add task-list title" type="text"/>
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true"
+                          onclick="changeDisplayForTwoElements('new-list', 'save-list')">&times;</span>
+                </button>
+            </form:form>
+        </div>
     </section>
 </div>
 </body>

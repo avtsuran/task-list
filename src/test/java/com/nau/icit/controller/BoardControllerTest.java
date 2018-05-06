@@ -1,6 +1,8 @@
 package com.nau.icit.controller;
 
 import com.nau.icit.model.Board;
+import com.nau.icit.model.Task;
+import com.nau.icit.model.TaskList;
 import com.nau.icit.model.User;
 import com.nau.icit.repository.BoardRepository;
 import com.nau.icit.repository.TaskListRepository;
@@ -42,7 +44,7 @@ public class BoardControllerTest {
     private MockMvc mockMvc;
     private User user;
     private List<Board> boards;
-    @Mock
+    private TaskList taskList;
     private Board board;
     @Before
     public void setUp() {
@@ -57,6 +59,9 @@ public class BoardControllerTest {
         boards = new ArrayList<Board>();
         boards.add(board);
         boards.add(new Board());
+        taskList = new TaskList();
+        taskList.setName("To do");
+        taskList.setBoard(board);
     }
 
     @Test
@@ -96,6 +101,15 @@ public class BoardControllerTest {
         mockMvc.perform(post("/board")
                     .param("id", board.getId().toString())
                     .param("name", board.getName()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("redirect:/board?id=" + board.getId()));
+    }
+
+    @Test
+    public void shouldAddTaskListAndReturnBoardPage() throws Exception{
+        when(boardRepository.findBoardById(1L)).thenReturn(board);
+        mockMvc.perform(post("/add-task-list?id=1")
+                    .param("name", taskList.getName()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("redirect:/board?id=" + board.getId()));
     }
