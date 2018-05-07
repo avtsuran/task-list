@@ -53,11 +53,11 @@
         <c:forEach items="${list}" var="taskList">
             <div class="task-list">
                 <h4>${taskList.name}</h4>
-                <ul class="list">
+                <section class="list">
                     <c:forEach items="${taskList.tasks}" var="task">
-                        <li class="task">${task.name}</li>
+                        <div class="task">${task.name}</div>
                     </c:forEach>
-                </ul>
+                </section>
                 <div id="new-${taskList.id}" class="add-task">
                     <a onclick="changeDisplayForTwoElements('save-${taskList.id}', 'new-${taskList.id}')">Add task ...</a>
                 </div>
