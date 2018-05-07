@@ -1,6 +1,7 @@
 package com.nau.icit.controller;
 
 import com.nau.icit.model.Board;
+import com.nau.icit.model.Task;
 import com.nau.icit.model.TaskList;
 import com.nau.icit.repository.BoardRepository;
 import com.nau.icit.repository.TaskListRepository;
@@ -13,6 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class BoardController {
@@ -55,6 +58,7 @@ public class BoardController {
         modelMap.addAttribute("list", taskListRepository.findTaskListsByBoardId(id));
         modelMap.addAttribute("board", boardRepository.findBoardById(id));
         modelMap.addAttribute("newList", new TaskList());
+        modelMap.addAttribute("task", new Task());
         return "board";
     }
 
@@ -72,6 +76,17 @@ public class BoardController {
     public String addTaskList(@RequestParam Long id, TaskList taskList){
         taskList.setBoard(boardRepository.findBoardById(id));
         taskListRepository.save(taskList);
+        return "redirect:/board?id=" + taskList.getBoard().getId();
+    }
+
+    @Transactional
+    @PostMapping("/add-task")
+    public String addTask(@RequestParam Long id, Task task){
+        Task newTask = new Task();
+        newTask.setName(task.getName());
+        TaskList taskList = taskListRepository.findTaskListById(id);
+        newTask.setTaskList(taskList);
+        taskRepository.save(newTask);
         return "redirect:/board?id=" + taskList.getBoard().getId();
     }
 }

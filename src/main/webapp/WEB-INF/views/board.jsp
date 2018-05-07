@@ -62,16 +62,16 @@
                     <a onclick="changeDisplayForTwoElements('save-${taskList.id}', 'new-${taskList.id}')">Add task ...</a>
                 </div>
                 <div id="save-${taskList.id}" class="save-task">
-                    <form method="post" modelAttribute="task">
+                    <form:form method="post" modelAttribute="task" action="/add-task?id=${taskList.id}">
                         <fieldset>
-                            <input class="title-task" path="name" placeholder="Add task title" type="text"/>
+                            <form:input class="title-task" path="name" placeholder="Add task title" type="text"/>
                         </fieldset>
                         <button type="submit" class="btn btn-success">Save</button>
                         <button type="button" onclick="changeDisplayForTwoElements('new-${taskList.id}', 'save-${taskList.id}')"
                                 class="close" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </form>
+                    </form:form>
                 </div>
             </div>
         </c:forEach>
