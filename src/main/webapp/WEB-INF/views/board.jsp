@@ -39,7 +39,7 @@
             </div>
         </div>
         <div id="edit">
-            <form:form class="form-edit" method="post" modelAttribute="board">
+            <form:form class="form-edit" method="post" modelAttribute="board" autocomplete="off">
                 <form:hidden path="id"/>
                 <form:input class="edit-input" path="name" placeholder="Edit board " type="text"/>
                 <button type="submit" class="btn btn-success" style="margin-right: 11px">Save</button>
@@ -62,7 +62,7 @@
                     <a onclick="changeDisplayForTwoElements('save-${taskList.id}', 'new-${taskList.id}')">Add task ...</a>
                 </div>
                 <div id="save-${taskList.id}" class="save-task">
-                    <form:form method="post" modelAttribute="task" action="/add-task?id=${taskList.id}">
+                    <form:form method="post" modelAttribute="task" action="/add-task?id=${taskList.id}" autocomplete="off">
                         <fieldset>
                             <form:input class="title-task" path="name" placeholder="Add task title" type="text"/>
                         </fieldset>
@@ -81,7 +81,7 @@
         </div>
 
         <div id="save-list" class="task-list" style="display: none;">
-            <form:form method="post" action="/add-task-list?id=${board.id}" modelAttribute="newList">
+            <form:form method="post" action="/add-task-list?id=${board.id}" modelAttribute="newList" autocomplete="off">
                 <form:input class="title-task-list" path="name" placeholder="Add task-list title" type="text"/>
                 <button type="submit" class="btn btn-success">Save</button>
                 <button type="button" class="close" aria-label="Close">

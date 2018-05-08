@@ -22,7 +22,7 @@
 </nav>
 <div class="container"  style="display: flex; justify-content: center;">
     <div class="col-md-4">
-        <form:form method="post" modelAttribute="user" action="/registration">
+        <form:form method="post" modelAttribute="user" action="/registration" autocomplete="off">
             <form:hidden path="id" />
             <fieldset class="form-group">
                 <form:label path="firstName">First name</form:label>

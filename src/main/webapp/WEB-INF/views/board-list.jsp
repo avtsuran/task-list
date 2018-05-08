@@ -33,7 +33,7 @@
         </c:forEach>
 
         <div class="save-board" id="save-board">
-            <form:form method="post" modelAttribute="board" action="/board-list">
+            <form:form method="post" modelAttribute="board" action="/board-list" autocomplete="off">
                 <form:hidden path="id"/>
                 <fieldset>
                     <form:input class="title-board" path="name" placeholder="Add board title" type="text"/>

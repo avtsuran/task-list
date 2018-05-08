@@ -17,7 +17,7 @@
 
 <div class="container" style="display: flex; justify-content: center;">
     <div class="col-md-4">
-        <form action="/login" method="post">
+        <form action="/login" method="post" autocomplete="off">
 
             <c:if test="${empty showMessage}">
                 <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
