@@ -1,0 +1,24 @@
+.modal-window {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.content {
+    background-color: rgba(0,0,0,0);
+    padding: 5px;
+    margin: 30px auto;
+    border-radius: 3px;
+    width: 350px;
+}
+
+.content-message{
+    background-color: #ffffff;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    padding: 10px;
+}

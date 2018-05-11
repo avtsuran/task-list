@@ -8,6 +8,7 @@
     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
           rel="stylesheet">
     <link href="css/board-list.css" rel="stylesheet">
+    <link href="css/modal.css" rel="stylesheet">
     <script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
