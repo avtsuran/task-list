@@ -24,10 +24,8 @@ html, body{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 10px;
-    padding-right: 10px;
     height: 34px;
-    min-width: 50px;
+    width: 50px;
     margin-right: 10px;
     background-color: #007cbb;
     text-align: center;
@@ -53,17 +51,6 @@ html, body{
     font-size: 18px;
 }
 
-input:focus, input:hover {
-    outline:none;
-}
-
-.task-list-container {
-    display: flex;
-    align-items: flex-start;
-    overflow-x: auto;
-    height: 500px;
-}
-
 .task-list-container {
     display: flex;
     align-items: flex-start;
@@ -86,6 +73,8 @@ input:focus, input:hover {
 }
 
 .task-list {
+    display: flex;
+    flex-direction: column;
     margin-right: 10px;
     margin-bottom: 10px;
     padding-bottom: 10px;
@@ -96,11 +85,23 @@ input:focus, input:hover {
     border-radius: 3px;
 }
 
+.task-list-head{
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.task-list-menu{
+    display: flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
 .list {
     padding: 0px;
     display: flex;
     flex-direction: column;
-    max-height: 350px;
+    max-height: 360px;
     overflow-y: auto;
 }
 
@@ -116,7 +117,7 @@ input:focus, input:hover {
 .task {
     background-color: #ffffff;
     padding: 5px 90px 30px 5px;
-    margin-top: 5px;
+    margin-bottom: 5px;
     margin-right: 5px;
     border-radius: 3px;
     border-bottom: 2px #cdcdcd ;
@@ -144,6 +145,17 @@ input:focus, input:hover {
     font-size: 15px;
 }
 
+.edit-title{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    width: 120px;
+    height: 30px;
+    border-radius: 3px;
+    border: none;
+    font-size: 15px;
+}
+
 .save-task {
     display: none;
 }
@@ -154,10 +166,6 @@ input:focus, input:hover {
 
 input:focus, input:hover {
     outline:none;
-}
-
-form{
-    margin: 0;
 }
 
 .add-list{
@@ -185,4 +193,41 @@ form{
     border-radius: 3px;
     border: none;
     font-size: 15px;
+}
+
+button:focus{
+    outline: none;
+}
+
+.hide-block{
+    display: none;
+}
+
+.modal-window {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.content {
+    background-color: rgba(0,0,0,0);
+    padding: 5px;
+    margin: 30px auto;
+    border-radius: 3px;
+    width: 350px;
+}
+
+.content-message{
+    background-color: #ffffff;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+form{
+    margin-bottom: 0;
 }

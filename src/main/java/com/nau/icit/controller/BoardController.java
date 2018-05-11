@@ -88,4 +88,14 @@ public class BoardController {
         taskRepository.save(task);
         return "redirect:/board?id=" + taskList.getBoard().getId();
     }
+
+    @Transactional
+    @PostMapping("/edit-task-list")
+    public String editTaskList(@RequestParam Long id, TaskList edit, ModelMap modelMap){
+        TaskList taskList = taskListRepository.findTaskListById(id);
+        taskList.setName(edit.getName());
+        taskListRepository.save(taskList);
+        modelMap.clear();
+        return "redirect:/board?id=" + taskList.getBoard().getId();
+    }
 }

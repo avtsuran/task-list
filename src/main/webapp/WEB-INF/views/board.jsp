@@ -51,8 +51,41 @@
 
     <section class="task-list-container">
         <c:forEach items="${list}" var="taskList">
-            <div class="task-list">
-                <h4>${taskList.name}</h4>
+            <div id="${taskList.id}" class="task-list">
+                <div class="task-list-head">
+                    <div id="name-${taskList.id}">
+                        <h4>${taskList.name}</h4>
+                    </div>
+                    <div id="form-edit-${taskList.id}" class="hide-block">
+                        <form:form class="form-edit" method="post" action="/edit-task-list?id=${taskList.id}" modelAttribute="newList" autocomplete="off">
+                            <fieldset>
+                                <form:input class="edit-title" path="name" placeholder="Edit task-list" type="text"/>
+                            </fieldset>
+                            <button type="submit" class="btn btn-success btn-sm" style="margin: 5px">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                        </form:form>
+                    </div>
+                    <div class="task-list-menu">
+                        <div id="menu-list-${taskList.id}" class="hide-block">
+                            <a class="btn btn-info btn-sm" onclick="changeDisplayForTwoElements('form-edit-${taskList.id}', 'name-${taskList.id}')">
+                                <span class="glyphicon glyphicon-pencil" style="margin: 3px 0"></span>
+                            </a>
+                            <a href="#" class="btn btn-danger btn-sm" onclick="removeTaskList('${taskList.id}')">
+                                <span class="glyphicon glyphicon-trash" style="margin: 3px 0"></span>
+                            </a>
+                            <button type="button" class="close"
+                                    onclick="taskListHead('open-menu-list-${taskList.id}', 'menu-list-${taskList.id}', 'form-edit-${taskList.id}', 'name-${taskList.id}')"
+                                    style="margin: 5px">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <button id="open-menu-list-${taskList.id}" type="button" class="close"
+                                onclick="changeDisplayForTwoElements('menu-list-${taskList.id}', 'open-menu-list-${taskList.id}')">
+                            <span class="glyphicon glyphicon-option-horizontal"></span>
+                        </button>
+                    </div>
+                </div>
                 <section class="list">
                     <c:forEach items="${taskList.tasks}" var="task">
                         <div class="task">${task.name}</div>
@@ -91,6 +124,18 @@
             </form:form>
         </div>
     </section>
+
+    <div id="modal" class="modal-window">
+        <div class="content">
+            <div class="content-message">
+                <h4 id="remove">Remove the task-list?</h4>
+                <p>Once you remove a task-list, there is no going back. Please be certain.</p>
+            </div>
+            <a type="button" id="remove-list-by-id" class="btn btn-danger">Remove</a>
+            <a type="button" class="btn btn-default" onclick="hideModal()">No, thanks.</a>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>
