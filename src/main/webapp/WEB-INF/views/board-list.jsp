@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="modal" tagdir="/WEB-INF/tags/modal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -45,16 +45,7 @@
             </form:form>
         </div>
 
-        <div id="modal" class="modal-window">
-            <div class="content">
-                <div class="content-message">
-                    <h3 id="remove">Remove the board?</h3>
-                    <p>Once you remove a board, there is no going back. Please be certain.</p>
-                </div>
-                <a type="button" id="remove-board-by-id" class="btn btn-danger">Remove</a>
-                <a type="button" class="btn btn-default" onclick="showOrHideElement('modal')">No thanks</a>
-            </div>
-        </div>
+        <modal:remove name="board"/>
 
         <div class="create-board" id="add-board" onclick="changeDisplayForTwoElements('save-board', 'add-board')">
             <p>Create new board</p>
