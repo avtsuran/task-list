@@ -98,4 +98,13 @@ public class BoardController {
         modelMap.clear();
         return "redirect:/board?id=" + taskList.getBoard().getId();
     }
+
+    @Transactional
+    @GetMapping("/remove-task-list")
+    public String removeTaskList(@RequestParam Long id){
+        TaskList taskList = taskListRepository.findTaskListById(id);
+        taskRepository.deleteAllByTaskList(taskList);
+        taskListRepository.delete(taskList);
+        return "redirect:/board?id=" + taskList.getBoard().getId();
+    }
 }
