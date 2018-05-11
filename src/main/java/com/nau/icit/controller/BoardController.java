@@ -82,11 +82,10 @@ public class BoardController {
     @Transactional
     @PostMapping("/add-task")
     public String addTask(@RequestParam Long id, Task task){
-        Task newTask = new Task();
-        newTask.setName(task.getName());
+        task.setId(null);
         TaskList taskList = taskListRepository.findTaskListById(id);
-        newTask.setTaskList(taskList);
-        taskRepository.save(newTask);
+        task.setTaskList(taskList);
+        taskRepository.save(task);
         return "redirect:/board?id=" + taskList.getBoard().getId();
     }
 }

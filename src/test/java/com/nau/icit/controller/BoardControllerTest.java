@@ -6,6 +6,7 @@ import com.nau.icit.model.TaskList;
 import com.nau.icit.model.User;
 import com.nau.icit.repository.BoardRepository;
 import com.nau.icit.repository.TaskListRepository;
+import com.nau.icit.repository.TaskRepository;
 import com.nau.icit.service.UserAuthService;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertNull;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,11 +43,14 @@ public class BoardControllerTest {
     private TaskListRepository taskListRepository;
     @Mock
     private UserAuthService userAuthService;
+    @Mock
+    private TaskRepository taskRepository;
     private MockMvc mockMvc;
     private User user;
     private List<Board> boards;
     private TaskList taskList;
     private Board board;
+    private Task task;
     @Before
     public void setUp() {
         mockMvc = standaloneSetup(boardController)
@@ -62,6 +67,10 @@ public class BoardControllerTest {
         taskList = new TaskList();
         taskList.setName("To do");
         taskList.setBoard(board);
+        task = new Task();
+        task.setId(1L);
+        task.setName("JPA");
+        task.setTaskList(taskList);
     }
 
     @Test
@@ -112,5 +121,14 @@ public class BoardControllerTest {
                     .param("name", taskList.getName()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("redirect:/board?id=" + board.getId()));
+    }
+
+    @Test
+    public void shouldAddTaskAndReturnBoardPage() throws Exception{
+        when(taskListRepository.findTaskListById(1L)).thenReturn(taskList);
+        mockMvc.perform(post("/add-task?id=1")
+                .param("name", task.getName()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("redirect:/board?id=" + taskList.getBoard().getId()));
     }
 }
