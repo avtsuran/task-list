@@ -14,16 +14,16 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.TestCase.assertNull;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -32,10 +32,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BoardControllerTest {
+public class BoardListControllerTest {
 
     @InjectMocks
-    private BoardController boardController;
+    private BoardListController boardListController;
     @Mock
     private View mockView;
     @Mock
@@ -55,7 +55,7 @@ public class BoardControllerTest {
 
     @Before
     public void setUp() {
-        mockMvc = standaloneSetup(boardController)
+        mockMvc = standaloneSetup(boardListController)
                 .setSingleView(mockView)
                 .build();
         user = new User();
@@ -66,47 +66,30 @@ public class BoardControllerTest {
         boards = new ArrayList<Board>();
         boards.add(board);
         boards.add(new Board());
-        taskList = new TaskList();
-        taskList.setName("To do");
-        taskList.setBoard(board);
-        task = new Task();
-        task.setId(1L);
-        task.setName("JPA");
-        task.setTaskList(taskList);
     }
 
     @Test
-    public void shouldReturnBoardPage() throws Exception{
-        mockMvc.perform(get("/board?id=" + board.getId()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("board"));
-    }
-
-    @Test
-    public void shouldEditBoardNameAndReturnBoardPage() throws Exception{
+    public void shouldReturnBoardsPage() throws Exception{
         when(userAuthService.getAuthUser()).thenReturn(user);
-        mockMvc.perform(post("/board")
-                    .param("id", board.getId().toString())
-                    .param("name", board.getName()))
+        when(boardRepository.findBoardsByUser(user)).thenReturn(boards);
+        mockMvc.perform(get("/board-list"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("redirect:/board?id=" + board.getId()));
+                .andExpect(model().attribute("boards", hasSize(2)))
+                .andExpect(view().name("board-list"));
     }
 
     @Test
-    public void shouldAddTaskListAndReturnBoardPage() throws Exception{
-        when(boardRepository.findBoardById(1L)).thenReturn(board);
-        mockMvc.perform(post("/add-task-list?id=1")
-                    .param("name", taskList.getName()))
+    public void shouldSaveBoardAndReturnToBoardsPage() throws Exception{
+        mockMvc.perform(post("/board-list"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("redirect:/board?id=" + board.getId()));
+                .andExpect(view().name("redirect:/board-list"));
     }
 
     @Test
-    public void shouldAddTaskAndReturnBoardPage() throws Exception{
-        when(taskListRepository.findTaskListById(1L)).thenReturn(taskList);
-        mockMvc.perform(post("/add-task?id=1")
-                    .param("name", task.getName()))
+    public void shouldRemoveBoardAndReturnToBoardsPage() throws Exception{
+        mockMvc.perform(get("/remove-board?id=" + board.getId()))
                 .andExpect(status().isOk())
-                .andExpect(view().name("redirect:/board?id=" + taskList.getBoard().getId()));
+                .andExpect(view().name("redirect:/board-list"));
+        verify(boardRepository, times(1)).delete(board.getId());
     }
 }

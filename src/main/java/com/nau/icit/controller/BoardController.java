@@ -29,30 +29,6 @@ public class BoardController {
     @Autowired
     private TaskRepository taskRepository;
 
-    @GetMapping("/board-list")
-    public String getBoards(ModelMap modelMap){
-        modelMap.addAttribute("boards", boardRepository.findBoardsByUser(userAuthService.getAuthUser()));
-        modelMap.addAttribute("board", new Board());
-        return "board-list";
-    }
-
-    @PostMapping("/board-list")
-    public String saveBoard(Board board){
-        board.setUser(userAuthService.getAuthUser());
-        boardRepository.save(board);
-        return "redirect:/board-list";
-    }
-
-    @Transactional
-    @GetMapping("/remove-board")
-    public String removeBoard(@RequestParam Long id){
-        for(TaskList taskList: taskListRepository.findTaskListsByBoardId(id))
-            taskRepository.deleteAllByTaskList(taskList);
-        taskListRepository.deleteAllByBoard(boardRepository.findBoardById(id));
-        boardRepository.delete(id);
-        return "redirect:/board-list";
-    }
-
     @GetMapping("/board")
     public String getBoard(@RequestParam Long id, ModelMap modelMap){
         modelMap.addAttribute("list", taskListRepository.findTaskListsByBoardId(id));
