@@ -56,16 +56,6 @@ public class BoardController {
     }
 
     @Transactional
-    @PostMapping("/add-task")
-    public String addTask(@RequestParam Long id, Task task){
-        task.setId(null);
-        TaskList taskList = taskListRepository.findTaskListById(id);
-        task.setTaskList(taskList);
-        taskRepository.save(task);
-        return "redirect:/board?id=" + taskList.getBoard().getId();
-    }
-
-    @Transactional
     @PostMapping("/edit-task-list")
     public String editTaskList(@RequestParam Long id, TaskList edit, ModelMap modelMap){
         TaskList taskList = taskListRepository.findTaskListById(id);
@@ -81,6 +71,16 @@ public class BoardController {
         TaskList taskList = taskListRepository.findTaskListById(id);
         taskRepository.deleteAllByTaskList(taskList);
         taskListRepository.delete(taskList);
+        return "redirect:/board?id=" + taskList.getBoard().getId();
+    }
+
+    @Transactional
+    @PostMapping("/add-task")
+    public String addTask(@RequestParam Long id, Task task){
+        task.setId(null);
+        TaskList taskList = taskListRepository.findTaskListById(id);
+        task.setTaskList(taskList);
+        taskRepository.save(task);
         return "redirect:/board?id=" + taskList.getBoard().getId();
     }
 }
