@@ -61,21 +61,21 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void shouldReturnLoginPage() throws Exception {
+    public void shouldReturnToLoginPage() throws Exception {
         mockMvc.perform(get("/login"))
                 .andExpect(status().isOk())
                 .andExpect(view().name(LOGIN));
     }
 
     @Test
-    public void shouldReturnRegistrationPage() throws Exception {
+    public void shouldReturnToRegistrationPage() throws Exception {
         mockMvc.perform(get("/registration"))
                 .andExpect(status().isOk())
                 .andExpect(view().name(REGISTRATION));
     }
 
     @Test
-    public void shouldReturnRegistrationPageIfUserIsInvalid() throws Exception {
+    public void shouldReturnToRegistrationPageIfUserIsInvalid() throws Exception {
         when(userAuthService.findUserByLogin(invalidUser.getLogin())).thenReturn(invalidUser);
         mockMvc.perform(post("/registration")
                     .param(FIRST_NAME, invalidUser.getFirstName())
@@ -89,7 +89,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void shouldReturnLoginPageAfterSuccessfulRegistration() throws Exception {
+    public void shouldReturnToLoginPageAfterSuccessfulRegistration() throws Exception {
         when(userAuthService.findUserByLogin(anyString())).thenReturn(null);
         mockMvc.perform(post("/registration")
                     .param(FIRST_NAME, validUser.getFirstName())

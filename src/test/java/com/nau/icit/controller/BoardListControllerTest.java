@@ -69,7 +69,7 @@ public class BoardListControllerTest {
     }
 
     @Test
-    public void shouldReturnBoardsPage() throws Exception{
+    public void shouldReturnToBoardsPage() throws Exception{
         when(userAuthService.getAuthUser()).thenReturn(user);
         when(boardRepository.findBoardsByUser(user)).thenReturn(boards);
         mockMvc.perform(get("/board-list"))

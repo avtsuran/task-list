@@ -76,14 +76,14 @@ public class BoardControllerTest {
     }
 
     @Test
-    public void shouldReturnBoardPage() throws Exception{
+    public void shouldReturnToBoardPage() throws Exception{
         mockMvc.perform(get("/board?id=" + board.getId()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("board"));
     }
 
     @Test
-    public void shouldEditBoardNameAndReturnBoardPage() throws Exception{
+    public void shouldEditBoardNameAndReturnToBoardPage() throws Exception{
         when(userAuthService.getAuthUser()).thenReturn(user);
         ArgumentCaptor<Board> captor = ArgumentCaptor.forClass(Board.class);
 
@@ -100,7 +100,7 @@ public class BoardControllerTest {
     }
 
     @Test
-    public void shouldAddTaskListAndReturnBoardPage() throws Exception{
+    public void shouldAddTaskListAndReturnToBoardPage() throws Exception{
         when(boardRepository.findBoardById(board.getId())).thenReturn(board);
         ArgumentCaptor<TaskList> captor = ArgumentCaptor.forClass(TaskList.class);
 
@@ -115,7 +115,7 @@ public class BoardControllerTest {
     }
 
     @Test
-    public void shouldEditTaskListAndReturnBoardPage() throws Exception{
+    public void shouldEditTaskListAndReturnToBoardPage() throws Exception{
         when(taskListRepository.findTaskListById(taskList.getId())).thenReturn(taskList);
         ArgumentCaptor<TaskList> captor = ArgumentCaptor.forClass(TaskList.class);
 
@@ -131,7 +131,7 @@ public class BoardControllerTest {
     }
 
     @Test
-    public void shouldRemoveTaskListAndReturnBoardPage() throws Exception{
+    public void shouldRemoveTaskListAndReturnToBoardPage() throws Exception{
         when(taskListRepository.findTaskListById(taskList.getId())).thenReturn(taskList);
         ArgumentCaptor<TaskList> captor = ArgumentCaptor.forClass(TaskList.class);
 
@@ -144,7 +144,7 @@ public class BoardControllerTest {
     }
 
     @Test
-    public void shouldAddTaskAndReturnBoardPage() throws Exception{
+    public void shouldAddTaskAndReturnToBoardPage() throws Exception{
         when(taskListRepository.findTaskListById(taskList.getId())).thenReturn(taskList);
         ArgumentCaptor<Task> captor = ArgumentCaptor.forClass(Task.class);
 
