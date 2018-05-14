@@ -115,6 +115,35 @@ public class BoardControllerTest {
     }
 
     @Test
+    public void shouldEditTaskListAndReturnBoardPage() throws Exception{
+        when(taskListRepository.findTaskListById(taskList.getId())).thenReturn(taskList);
+        ArgumentCaptor<TaskList> captor = ArgumentCaptor.forClass(TaskList.class);
+
+        mockMvc.perform(post("/edit-task-list?id=" + taskList.getId())
+                    .param("name", "New name"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("redirect:/board?id=" + board.getId()));
+
+        verify(taskListRepository).save(captor.capture());
+        assertEquals(taskList.getId(), captor.getValue().getId());
+        assertEquals("New name", captor.getValue().getName());
+        assertEquals(taskList.getBoard().getId(), captor.getValue().getBoard().getId());
+    }
+
+    @Test
+    public void shouldRemoveTaskListAndReturnBoardPage() throws Exception{
+        when(taskListRepository.findTaskListById(taskList.getId())).thenReturn(taskList);
+        ArgumentCaptor<TaskList> captor = ArgumentCaptor.forClass(TaskList.class);
+
+        mockMvc.perform(get("/remove-task-list?id=" + taskList.getId()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("redirect:/board?id=" + board.getId()));
+
+        verify(taskRepository).deleteAllByTaskList(captor.capture());
+        verify(taskListRepository).delete(captor.capture());
+    }
+
+    @Test
     public void shouldAddTaskAndReturnBoardPage() throws Exception{
         when(taskListRepository.findTaskListById(taskList.getId())).thenReturn(taskList);
         ArgumentCaptor<Task> captor = ArgumentCaptor.forClass(Task.class);
