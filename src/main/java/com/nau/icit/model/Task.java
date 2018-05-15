@@ -17,6 +17,9 @@ public class Task {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "priority")
+    private Integer priority;
+
     @ManyToOne
     @JoinColumn(name = "task_list_id")
     private TaskList taskList;
@@ -43,6 +46,14 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 
     public TaskList getTaskList() {

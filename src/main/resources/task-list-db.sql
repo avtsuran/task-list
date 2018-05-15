@@ -50,6 +50,8 @@ CREATE TABLE `task` (
   `task_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `task_list_id` int(11) NOT NULL,
+  `description` varchar(255),
+  `priority` int(11),
   PRIMARY KEY (`task_id`),
   FOREIGN KEY (`task_list_id`) REFERENCES `task_list` (`task_list_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
