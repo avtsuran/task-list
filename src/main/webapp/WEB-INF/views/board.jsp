@@ -57,7 +57,10 @@
 
                 <section class="list">
                     <c:forEach items="${taskList.tasks}" var="task">
-                        <div class="task">${task.name}</div>
+                        <div class="task">
+                            <p>${task.name}</p>
+                            <div class="priority-${task.priority}"></div>
+                        </div>
                     </c:forEach>
                 </section>
 

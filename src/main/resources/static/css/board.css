@@ -118,8 +118,10 @@ html, body{
 }
 
 .task {
+    display: flex;
+    justify-content: space-between;
     background-color: #ffffff;
-    padding: 5px 90px 30px 5px;
+    padding: 5px;
     margin-bottom: 5px;
     margin-right: 5px;
     border-radius: 3px;
@@ -129,6 +131,24 @@ html, body{
 
 .task:hover {
     background-color: #edeff0;
+}
+
+.priority-2{
+    background-color: #d9534f;
+    width: 5px;
+    border-radius: 5px;
+}
+
+.priority-1{
+    background-color: #5cb85c;
+    width: 5px;
+    border-radius: 5px;
+}
+
+.priority-0{
+    background-color: #5bc0de;
+    width: 5px;
+    border-radius: 5px;
 }
 
 .add-task {

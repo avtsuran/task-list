@@ -49,6 +49,7 @@ public class BoardControllerTest {
     private User user;
     private List<Board> boards;
     private TaskList taskList;
+    private List<TaskList> lists;
     private Board board;
     private Task task;
 
@@ -62,13 +63,17 @@ public class BoardControllerTest {
         board.setId(11L);
         board.setUser(user);
         board.setName("Java");
-        boards = new ArrayList<Board>();
+        boards = new ArrayList<>();
         boards.add(board);
         boards.add(new Board());
         taskList = new TaskList();
         taskList.setId(243L);
         taskList.setName("To do");
         taskList.setBoard(board);
+        taskList.setTasks(new ArrayList<>());
+        taskList.getTasks().add(task);
+        lists = new ArrayList<>();
+        lists.add(taskList);
         task = new Task();
         task.setId(9L);
         task.setName("JPA");
@@ -77,6 +82,8 @@ public class BoardControllerTest {
 
     @Test
     public void shouldReturnToBoardPage() throws Exception{
+        when(taskListRepository.findTaskListsByBoardId(board.getId())).thenReturn(lists);
+
         mockMvc.perform(get("/board?id=" + board.getId()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("board"));

@@ -6,6 +6,7 @@ import com.nau.icit.model.TaskList;
 import com.nau.icit.repository.BoardRepository;
 import com.nau.icit.repository.TaskListRepository;
 import com.nau.icit.repository.TaskRepository;
+import com.nau.icit.service.TaskService;
 import com.nau.icit.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -30,8 +32,12 @@ public class BoardController {
     private TaskRepository taskRepository;
 
     @GetMapping("/board")
-    public String getBoard(@RequestParam Long id, ModelMap modelMap){
-        modelMap.addAttribute("list", taskListRepository.findTaskListsByBoardId(id));
+    public String getBoard(@RequestParam Long id, ModelMap modelMap) {
+        List<TaskList> lists = taskListRepository.findTaskListsByBoardId(id);
+        for (TaskList taskList : lists) {
+            Collections.sort(taskList.getTasks(), new TaskService());
+        }
+        modelMap.addAttribute("list", lists);
         modelMap.addAttribute("board", boardRepository.findBoardById(id));
         modelMap.addAttribute("newList", new TaskList());
         modelMap.addAttribute("task", new Task());
@@ -40,7 +46,7 @@ public class BoardController {
 
     @Transactional
     @PostMapping("/board")
-    public String editBoard(Board board, ModelMap modelMap){
+    public String editBoard(Board board, ModelMap modelMap) {
         board.setUser(userAuthService.getAuthUser());
         boardRepository.save(board);
         modelMap.clear();
@@ -49,7 +55,7 @@ public class BoardController {
 
     @Transactional
     @PostMapping("/add-task-list")
-    public String addTaskList(@RequestParam Long id, TaskList taskList){
+    public String addTaskList(@RequestParam Long id, TaskList taskList) {
         taskList.setBoard(boardRepository.findBoardById(id));
         taskListRepository.save(taskList);
         return "redirect:/board?id=" + taskList.getBoard().getId();
@@ -57,7 +63,7 @@ public class BoardController {
 
     @Transactional
     @PostMapping("/edit-task-list")
-    public String editTaskList(@RequestParam Long id, TaskList edit, ModelMap modelMap){
+    public String editTaskList(@RequestParam Long id, TaskList edit, ModelMap modelMap) {
         TaskList taskList = taskListRepository.findTaskListById(id);
         taskList.setName(edit.getName());
         taskListRepository.save(taskList);
@@ -67,7 +73,7 @@ public class BoardController {
 
     @Transactional
     @GetMapping("/remove-task-list")
-    public String removeTaskList(@RequestParam Long id){
+    public String removeTaskList(@RequestParam Long id) {
         TaskList taskList = taskListRepository.findTaskListById(id);
         taskRepository.deleteAllByTaskList(taskList);
         taskListRepository.delete(taskList);
@@ -76,8 +82,9 @@ public class BoardController {
 
     @Transactional
     @PostMapping("/add-task")
-    public String addTask(@RequestParam Long id, Task task){
+    public String addTask(@RequestParam Long id, Task task) {
         task.setId(null);
+        task.setPriority(1);
         TaskList taskList = taskListRepository.findTaskListById(id);
         task.setTaskList(taskList);
         taskRepository.save(task);
