@@ -229,3 +229,14 @@ button:focus{
 form{
     margin-bottom: 0;
 }
+
+.task-link{
+    color: #000000;
+    display: block;
+    width: 275px;
+}
+
+a:hover, a:active{
+    color: #000000 !important;
+    text-decoration: none !important;
+}

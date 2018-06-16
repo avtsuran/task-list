@@ -58,7 +58,7 @@
                 <section class="list">
                     <c:forEach items="${taskList.tasks}" var="task">
                         <div class="task">
-                            <p>${task.name}</p>
+                            <a class="task-link" href="/task?id=${task.id}">${task.name}</a>
                             <div class="priority-${task.priority}"></div>
                         </div>
                     </c:forEach>
